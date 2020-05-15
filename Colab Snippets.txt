@@ -1,0 +1,70 @@
+
+----Baking EEVEE headless------>
+(Note: Replace CYCLES with BLENDER_EEVEE)
+
+!apt-get install python-opengl -y
+
+!apt install xvfb -y
+
+!pip install pyvirtualdisplay
+
+!pip install piglet
+
+from pyvirtualdisplay import Display
+Display().start()
+
+-----------Copy from Google Drive--------->
+(To note, the "Mount Drive" within Colab's file browser UI mounts in the "/contents" directory.
+
+!cp "/content/drive/My Drive/MyFile.zip" "/content/MyFile.zip"
+
+-------To Unzip an imported Zip file-------->
+
+!unzip MyFile.zip -d My_Output
+
+------To Zip a folder for download -------->
+(E.g. a cache folder. There maybe easier ways)
+
+!pip install -U -q PyDrive
+
+from google.colab import files
+from pydrive.auth import GoogleAuth
+from pydrive.drive import GoogleDrive
+from google.colab import auth
+from oauth2client.client import GoogleCredentials
+import zipfile
+import os
+import sys
+
+zipname = 'ZippedFile'
+
+def zipfolder(foldername, target_dir):
+zipobj = zipfile.ZipFile(foldername + '.zip', 'w', zipfile.ZIP_DEFLATED)
+rootlen = len(target_dir) + 1
+for base, dirs, files in os.walk(target_dir):
+for file in files:
+fn = os.path.join(base, file)
+zipobj.write(fn, fn[rootlen:])
+
+zipfolder(zipname, '/content/ToZip')
+
+-------------For more Ram-------->
+(Note: crashes Colab's 12gb of Ram, Colab then offers 25gb)
+
+a = []
+while(1):
+a.append('1')
+
+---------------To Hide Cell Output--------->
+(Note: Add at top of the cell making it easy on the browser)
+
+%%capture
+
+----------To prevent Colab timing out---------->
+(Note: this needs to be added in browsers console. For Chrome: Shift-Ctrl-I)
+
+function ClickConnect(){
+console.log("Working");
+document.querySelector("colab-toolbar-button#connect").click()
+}
+setInterval(ClickConnect,60000)
